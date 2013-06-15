@@ -1,0 +1,12 @@
+﻿Name: Lombiq Antispam
+AntiForgery: enabled
+Author: Lombiq
+Website: http://lombiqantispam.codeplex.com
+Version: 1.0
+OrchardVersion: 1.7
+Description: Provides antispam services.
+Features:
+    Lombiq.Antispam:
+		Name: Lombiq Antispam
+        Description: Provides antispam services.
+		Category: Antispam
