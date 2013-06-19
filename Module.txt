@@ -10,3 +10,4 @@ Features:
 		Name: Lombiq Antispam
         Description: Provides antispam services.
 		Category: Security
+		Dependencies: Piedone.HelpfulLibraries.Utilities, Orchard.jQuery

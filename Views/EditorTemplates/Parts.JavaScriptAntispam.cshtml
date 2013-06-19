@@ -1,0 +1,25 @@
+﻿@model Lombiq.Antispam.Models.JavaScriptAntispamPart
+@using Piedone.HelpfulLibraries.Utilities
+
+@{
+    Script.Require("jQuery").AtFoot();
+}
+
+@Html.HiddenFor(m => m.IAmHuman)
+
+@using (this.CaptureOnce())
+{
+    using (Script.Foot())
+    {
+        <script type="text/javascript">
+            (function ($) {
+                var $field = $("#@Html.FieldIdFor(m => m.IAmHuman)");
+
+                $field.closest("form").submit(function () {
+                    alert('Handler for .submit() called.');
+                    $field.val("True");
+                });
+            })(jQuery);
+        </script>
+    }
+}
