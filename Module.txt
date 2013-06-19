@@ -9,4 +9,4 @@ Features:
     Lombiq.Antispam:
 		Name: Lombiq Antispam
         Description: Provides antispam services.
-		Category: Antispam
+		Category: Security
