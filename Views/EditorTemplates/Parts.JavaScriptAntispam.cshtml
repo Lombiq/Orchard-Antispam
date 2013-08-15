@@ -7,16 +7,15 @@
 
 @Html.HiddenFor(m => m.IAmHuman)
 
-@using (this.CaptureOnce())
+@using (Script.Foot())
 {
-    using (Script.Foot())
+    if (this.WasNotDisplayed("Lombiq.Antispam.JavaScriptAntispamPartInit"))
     {
         <script type="text/javascript">
             (function ($) {
                 var $field = $("#@Html.FieldIdFor(m => m.IAmHuman)");
 
                 $field.closest("form").submit(function () {
-                    alert('Handler for .submit() called.');
                     $field.val("True");
                 });
             })(jQuery);
