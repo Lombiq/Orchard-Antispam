@@ -1,5 +1,4 @@
 ﻿@model Lombiq.Antispam.Models.JavaScriptAntispamPart
-@using Piedone.HelpfulLibraries.Utilities
 
 @{
     Script.Require("jQuery").AtFoot();
@@ -9,16 +8,13 @@
 
 @using (Script.Foot())
 {
-    if (this.WasNotDisplayed("Lombiq.Antispam.JavaScriptAntispamPartInit"))
-    {
-        <script type="text/javascript">
-            (function ($) {
-                var $field = $("#@Html.FieldIdFor(m => m.IAmHuman)");
+    <script type="text/javascript">
+        (function ($) {
+            var $field = $("#@Html.FieldIdFor(m => m.IAmHuman)");
 
-                $field.closest("form").submit(function () {
-                    $field.val("True");
-                });
-            })(jQuery);
-        </script>
-    }
+            $field.closest("form").submit(function () {
+                $field.val("True");
+            });
+        })(jQuery);
+    </script>
 }
