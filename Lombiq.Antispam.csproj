@@ -85,12 +85,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\EditorTemplates\Parts.JavaScriptAntispam.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Drivers\JavaScriptAntispamPartDriver.cs" />
+    <Compile Include="Filters\RegisterFilter.cs" />
+    <Compile Include="Handlers\RegistrationSpamProtectorHandler.cs" />
     <Compile Include="Migrations.cs" />
-    <Compile Include="Models\JavaScriptAntispamPart.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Placement.info">

@@ -11,3 +11,8 @@ Features:
         Description: Provides antispam services.
 		Category: Security
 		Dependencies: Orchard.jQuery
+	Lombiq.Antispam.Registration:
+		Name: Lombiq Antispam Registration
+        Description: Provides antispam services for user registration.
+		Category: Security
+		Dependencies: Lombiq.Antispam
