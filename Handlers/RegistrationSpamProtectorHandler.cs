@@ -1,4 +1,5 @@
-﻿using Orchard.ContentManagement.Handlers;
+﻿using Orchard;
+using Orchard.ContentManagement.Handlers;
 using Orchard.Environment.Extensions;
 
 namespace Lombiq.Antispam.Handlers

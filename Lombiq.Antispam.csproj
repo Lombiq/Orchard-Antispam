@@ -96,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Licence.md" />
+    <Content Include="Views\Register.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

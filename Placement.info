@@ -1,3 +1,5 @@
 ﻿<Placement>
-  <Place Parts_JavaScriptAntispam_Edit="Content:5"/>
+  <Match ContentType="RegistrationSpamProtector">
+    <Place Content_SaveButton="-"/> 
+  </Match>
 </Placement>
