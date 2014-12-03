@@ -27,11 +27,42 @@ namespace Lombiq.Antispam.Filters
             {
                 if (filterContext.HttpContext.Request.HttpMethod.ToString().Equals("POST"))
                 {
-                    var controller = filterContext.Controller as Controller;
+                    var filterContextController = filterContext.Controller;
+                    var updaterController = new UpdaterController();
+                    updaterController.ControllerContext = filterContextController.ControllerContext;
+                    updaterController.ValueProvider = filterContextController.ValueProvider;
+
+                    var antispampart = _contentManager.New(ContentTypes.RegistrationSpamProtector);
+
+                    _contentManager.UpdateEditor(antispampart, updaterController);
+
+                    if (!updaterController.ModelState.IsValid)
+                    {
+
+                    }
                 }
 
                 filterContext.Controller.ViewData[ContentTypes.RegistrationSpamProtector] = _contentManager.BuildEditor(_contentManager.New(ContentTypes.RegistrationSpamProtector));
             }
         }
+    }
+
+
+    [OrchardFeature("Lombiq.Antispam.Registration")]
+    public class UpdaterController : Controller, IUpdateModel
+    {
+        #region IUpdateModel Members
+
+        bool IUpdateModel.TryUpdateModel<TModel>(TModel model, string prefix, string[] includeProperties, string[] excludeProperties)
+        {
+            return TryUpdateModel(model, prefix, includeProperties, excludeProperties);
+        }
+
+        void IUpdateModel.AddModelError(string key, LocalizedString errorMessage)
+        {
+            ModelState.AddModelError(key, errorMessage.ToString());
+        }
+
+        #endregion
     }
 }

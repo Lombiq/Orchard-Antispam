@@ -1,5 +1,4 @@
-﻿using Orchard;
-using Orchard.Environment.Extensions;
+﻿using Orchard.Environment.Extensions;
 using Orchard.Users.Events;
 
 namespace Lombiq.Antispam.Handlers
@@ -7,14 +6,9 @@ namespace Lombiq.Antispam.Handlers
     [OrchardFeature("Lombiq.Antispam.Registration")]
     public class RegistrationSpamProtectorHandler : IUserEventHandler
     {
-        private readonly IWorkContextAccessor _wca;
-        public RegistrationSpamProtectorHandler(IWorkContextAccessor wca)
-        {
-            _wca = wca;
-        }
         public void Creating(UserContext context)
         {
-            if (true)
+            if (false)
             {
                 context.Cancel = true;
             }
@@ -22,7 +16,7 @@ namespace Lombiq.Antispam.Handlers
 
         public void Created(UserContext context)
         {
-           
+
         }
 
         public void LoggedIn(Orchard.Security.IUser user)
