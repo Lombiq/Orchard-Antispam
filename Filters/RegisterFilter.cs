@@ -3,19 +3,23 @@ using Orchard.ContentManagement;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
 using Orchard.Mvc.Filters;
+using Orchard.Users.Events;
 using System.Web.Mvc;
 
 namespace Lombiq.Antispam.Filters
 {
     [OrchardFeature("Lombiq.Antispam.Registration")]
-    public class RegisterFilter : FilterProvider, IResultFilter
+    public class RegisterFilter : FilterProvider, IResultFilter, IUserEventHandler
     {
         private readonly IContentManager _contentManager;
+        private bool _modelStateIsValid;
 
 
         public RegisterFilter(IContentManager contentManager)
         {
             _contentManager = contentManager;
+
+            _modelStateIsValid = true;
         }
 
 
@@ -38,12 +42,60 @@ namespace Lombiq.Antispam.Filters
 
                     if (!updaterController.ModelState.IsValid)
                     {
-
+                        _modelStateIsValid = false;
                     }
                 }
 
                 filterContext.Controller.ViewData[ContentTypes.RegistrationSpamProtector] = _contentManager.BuildEditor(_contentManager.New(ContentTypes.RegistrationSpamProtector));
             }
+        }
+
+        public void Creating(UserContext context)
+        {
+            if (!_modelStateIsValid)
+            {
+                context.Cancel = true;
+            }
+        }
+
+        public void Created(UserContext context)
+        {
+
+        }
+
+        public void LoggedIn(Orchard.Security.IUser user)
+        {
+
+        }
+
+        public void LoggedOut(Orchard.Security.IUser user)
+        {
+
+        }
+
+        public void AccessDenied(Orchard.Security.IUser user)
+        {
+
+        }
+
+        public void ChangedPassword(Orchard.Security.IUser user)
+        {
+
+        }
+
+        public void SentChallengeEmail(Orchard.Security.IUser user)
+        {
+
+        }
+
+        public void ConfirmedEmail(Orchard.Security.IUser user)
+        {
+
+        }
+
+        public void Approved(Orchard.Security.IUser user)
+        {
+
         }
     }
 

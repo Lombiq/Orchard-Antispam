@@ -91,7 +91,6 @@
   <ItemGroup>
     <Compile Include="Constants\ContentTypes.cs" />
     <Compile Include="Filters\RegisterFilter.cs" />
-    <Compile Include="Handlers\RegistrationSpamProtectorHandler.cs" />
     <Compile Include="Migrations.cs" />
   </ItemGroup>
   <ItemGroup>
