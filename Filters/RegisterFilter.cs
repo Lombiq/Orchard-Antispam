@@ -3,6 +3,7 @@ using Orchard.ContentManagement;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
 using Orchard.Mvc.Filters;
+using Orchard.Security;
 using Orchard.Users.Events;
 using System.Web.Mvc;
 
@@ -59,19 +60,19 @@ namespace Lombiq.Antispam.Filters
 
         public void Created(UserContext context) { }
 
-        public void LoggedIn(Orchard.Security.IUser user) { }
+        public void LoggedIn(IUser user) { }
 
-        public void LoggedOut(Orchard.Security.IUser user) { }
+        public void LoggedOut(IUser user) { }
 
-        public void AccessDenied(Orchard.Security.IUser user) { }
+        public void AccessDenied(IUser user) { }
 
-        public void ChangedPassword(Orchard.Security.IUser user) { }
+        public void ChangedPassword(IUser user) { }
 
-        public void SentChallengeEmail(Orchard.Security.IUser user) { }
+        public void SentChallengeEmail(IUser user) { }
 
-        public void ConfirmedEmail(Orchard.Security.IUser user) { }
+        public void ConfirmedEmail(IUser user) { }
 
-        public void Approved(Orchard.Security.IUser user) { }
+        public void Approved(IUser user) { }
     }
 
 
