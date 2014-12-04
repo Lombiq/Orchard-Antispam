@@ -1,4 +1,5 @@
 ﻿using Lombiq.Antispam.Constants;
+using Lombiq.Antispam.Services;
 using Orchard.ContentManagement;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
@@ -12,14 +13,12 @@ namespace Lombiq.Antispam.Filters
     public class RegisterFilter : FilterProvider, IResultFilter, IUserEventHandler
     {
         private readonly IContentManager _contentManager;
-        private bool _modelStateIsValid;
+        private readonly IModelStateStoreService _modelStateStoreService;
 
-
-        public RegisterFilter(IContentManager contentManager)
+        public RegisterFilter(IContentManager contentManager, IModelStateStoreService modelStateStoreService)
         {
             _contentManager = contentManager;
-
-            _modelStateIsValid = true;
+            _modelStateStoreService = modelStateStoreService;
         }
 
 
@@ -42,7 +41,7 @@ namespace Lombiq.Antispam.Filters
 
                     if (!updaterController.ModelState.IsValid)
                     {
-                        _modelStateIsValid = false;
+                        _modelStateStoreService.ModelStateIsValid = false;
                     }
                 }
 
@@ -52,7 +51,7 @@ namespace Lombiq.Antispam.Filters
 
         public void Creating(UserContext context)
         {
-            if (!_modelStateIsValid)
+            if (!_modelStateStoreService.ModelStateIsValid)
             {
                 context.Cancel = true;
             }

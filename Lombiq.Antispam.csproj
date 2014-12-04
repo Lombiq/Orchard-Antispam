@@ -92,6 +92,7 @@
     <Compile Include="Constants\ContentTypes.cs" />
     <Compile Include="Filters\RegisterFilter.cs" />
     <Compile Include="Migrations.cs" />
+    <Compile Include="Services\IModelStateStoreService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Placement.info">
