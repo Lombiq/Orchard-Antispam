@@ -1,10 +1,11 @@
 ﻿using Lombiq.Antispam.Constants;
-using Lombiq.Antispam.Services;
+using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
 using Orchard.Mvc.Filters;
 using Orchard.Users.Events;
+using System;
 using System.Web.Mvc;
 
 namespace Lombiq.Antispam.Filters
@@ -13,12 +14,13 @@ namespace Lombiq.Antispam.Filters
     public class RegisterFilter : FilterProvider, IResultFilter, IUserEventHandler
     {
         private readonly IContentManager _contentManager;
-        private readonly IModelStateStoreService _modelStateStoreService;
+        private readonly IWorkContextAccessor _wca;
 
-        public RegisterFilter(IContentManager contentManager, IModelStateStoreService modelStateStoreService)
+
+        public RegisterFilter(IContentManager contentManager, IWorkContextAccessor wca)
         {
             _contentManager = contentManager;
-            _modelStateStoreService = modelStateStoreService;
+            _wca = wca;
         }
 
 
@@ -26,32 +28,32 @@ namespace Lombiq.Antispam.Filters
 
         public void OnResultExecuting(ResultExecutingContext filterContext)
         {
-            if (filterContext.RouteData.Values["action"].ToString() == "Register" && filterContext.RouteData.Values["controller"].ToString() == "Account" && filterContext.RouteData.Values["area"].ToString() == "Orchard.Users")
+            if (!(filterContext.RouteData.Values["action"].ToString() == "Register" && filterContext.RouteData.Values["controller"].ToString() == "Account" && filterContext.RouteData.Values["area"].ToString() == "Orchard.Users")) return;
+
+            if (filterContext.HttpContext.Request.HttpMethod.ToString().Equals("POST"))
             {
-                if (filterContext.HttpContext.Request.HttpMethod.ToString().Equals("POST"))
+                var filterContextController = filterContext.Controller;
+                var updaterController = new UpdaterController();
+                updaterController.ControllerContext = filterContextController.ControllerContext;
+                updaterController.ValueProvider = filterContextController.ValueProvider;
+
+                var antispampart = _contentManager.New(ContentTypes.RegistrationSpamProtector);
+
+                _contentManager.UpdateEditor(antispampart, updaterController);
+
+                if (!updaterController.ModelState.IsValid)
                 {
-                    var filterContextController = filterContext.Controller;
-                    var updaterController = new UpdaterController();
-                    updaterController.ControllerContext = filterContextController.ControllerContext;
-                    updaterController.ValueProvider = filterContextController.ValueProvider;
-
-                    var antispampart = _contentManager.New(ContentTypes.RegistrationSpamProtector);
-
-                    _contentManager.UpdateEditor(antispampart, updaterController);
-
-                    if (!updaterController.ModelState.IsValid)
-                    {
-                        _modelStateStoreService.ModelStateIsValid = false;
-                    }
+                    _wca.GetContext().HttpContext.Items.Add("ModelStateIsValid", false);
                 }
-
-                filterContext.Controller.ViewData[ContentTypes.RegistrationSpamProtector] = _contentManager.BuildEditor(_contentManager.New(ContentTypes.RegistrationSpamProtector));
             }
+
+            filterContext.Controller.ViewData[ContentTypes.RegistrationSpamProtector] = _contentManager.BuildEditor(_contentManager.New(ContentTypes.RegistrationSpamProtector));
+
         }
 
         public void Creating(UserContext context)
         {
-            if (!_modelStateStoreService.ModelStateIsValid)
+            if (!Convert.ToBoolean(_wca.GetContext().HttpContext.Items["ModelStateIsValid"]))
             {
                 context.Cancel = true;
             }
