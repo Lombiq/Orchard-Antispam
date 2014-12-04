@@ -1,32 +1,31 @@
 ﻿using Lombiq.Antispam.Constants;
-using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
 using Orchard.Mvc.Filters;
 using Orchard.Users.Events;
-using System;
 using System.Web.Mvc;
 
 namespace Lombiq.Antispam.Filters
 {
     [OrchardFeature("Lombiq.Antispam.Registration")]
-    public class RegisterFilter : FilterProvider, IResultFilter, IUserEventHandler
+    public class RegisterFilter : FilterProvider, IActionFilter, IUserEventHandler
     {
         private readonly IContentManager _contentManager;
-        private readonly IWorkContextAccessor _wca;
+        private bool _modelIsValid;
 
 
-        public RegisterFilter(IContentManager contentManager, IWorkContextAccessor wca)
+        public RegisterFilter(IContentManager contentManager)
         {
             _contentManager = contentManager;
-            _wca = wca;
+
+            _modelIsValid = true;
         }
 
 
-        public void OnResultExecuted(ResultExecutedContext filterContext) { }
+        public void OnActionExecuted(ActionExecutedContext filterContext) { }
 
-        public void OnResultExecuting(ResultExecutingContext filterContext)
+        public void OnActionExecuting(ActionExecutingContext filterContext)
         {
             if (!(filterContext.RouteData.Values["action"].ToString() == "Register" && filterContext.RouteData.Values["controller"].ToString() == "Account" && filterContext.RouteData.Values["area"].ToString() == "Orchard.Users")) return;
 
@@ -43,61 +42,36 @@ namespace Lombiq.Antispam.Filters
 
                 if (!updaterController.ModelState.IsValid)
                 {
-                    _wca.GetContext().HttpContext.Items.Add("ModelStateIsValid", false);
+                    _modelIsValid = false;
                 }
             }
 
             filterContext.Controller.ViewData[ContentTypes.RegistrationSpamProtector] = _contentManager.BuildEditor(_contentManager.New(ContentTypes.RegistrationSpamProtector));
-
         }
 
         public void Creating(UserContext context)
         {
-            if (!Convert.ToBoolean(_wca.GetContext().HttpContext.Items["ModelStateIsValid"]))
+            if (!_modelIsValid)
             {
                 context.Cancel = true;
             }
         }
 
-        public void Created(UserContext context)
-        {
+        public void Created(UserContext context) { }
 
-        }
+        public void LoggedIn(Orchard.Security.IUser user) { }
 
-        public void LoggedIn(Orchard.Security.IUser user)
-        {
+        public void LoggedOut(Orchard.Security.IUser user) { }
 
-        }
+        public void AccessDenied(Orchard.Security.IUser user) { }
 
-        public void LoggedOut(Orchard.Security.IUser user)
-        {
+        public void ChangedPassword(Orchard.Security.IUser user) { }
 
-        }
+        public void SentChallengeEmail(Orchard.Security.IUser user) { }
 
-        public void AccessDenied(Orchard.Security.IUser user)
-        {
+        public void ConfirmedEmail(Orchard.Security.IUser user) { }
 
-        }
-
-        public void ChangedPassword(Orchard.Security.IUser user)
-        {
-
-        }
-
-        public void SentChallengeEmail(Orchard.Security.IUser user)
-        {
-
-        }
-
-        public void ConfirmedEmail(Orchard.Security.IUser user)
-        {
-
-        }
-
-        public void Approved(Orchard.Security.IUser user)
-        {
-
-        }
+        public void Approved(Orchard.Security.IUser user) { }
     }
 
 
