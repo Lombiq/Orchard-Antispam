@@ -73,24 +73,23 @@ namespace Lombiq.Antispam.Filters
         public void ConfirmedEmail(IUser user) { }
 
         public void Approved(IUser user) { }
-    }
 
 
-    [OrchardFeature("Lombiq.Antispam.Registration")]
-    public class UpdaterController : Controller, IUpdateModel
-    {
-        #region IUpdateModel Members
-
-        bool IUpdateModel.TryUpdateModel<TModel>(TModel model, string prefix, string[] includeProperties, string[] excludeProperties)
+        private class UpdaterController : Controller, IUpdateModel
         {
-            return TryUpdateModel(model, prefix, includeProperties, excludeProperties);
-        }
+            #region IUpdateModel Members
 
-        void IUpdateModel.AddModelError(string key, LocalizedString errorMessage)
-        {
-            ModelState.AddModelError(key, errorMessage.ToString());
-        }
+            bool IUpdateModel.TryUpdateModel<TModel>(TModel model, string prefix, string[] includeProperties, string[] excludeProperties)
+            {
+                return TryUpdateModel(model, prefix, includeProperties, excludeProperties);
+            }
 
-        #endregion
+            void IUpdateModel.AddModelError(string key, LocalizedString errorMessage)
+            {
+                ModelState.AddModelError(key, errorMessage.ToString());
+            }
+
+            #endregion
+        }
     }
 }
