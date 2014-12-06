@@ -7,12 +7,11 @@ OrchardVersion: 1.8
 Description: Provides antispam services.
 Features:
     Lombiq.Antispam:
-		Name: Lombiq Antispam
+        Name: Lombiq Antispam
         Description: Provides antispam services.
-		Category: Security
-		Dependencies: Orchard.jQuery
-	Lombiq.Antispam.Registration:
-		Name: Lombiq Antispam Registration
+        Category: Security
+    Lombiq.Antispam.Registration:
+        Name: Lombiq Antispam Registration
         Description: Provides antispam services for user registration.
-		Category: Security
-		Dependencies: Lombiq.Antispam
+        Category: Security
+        Dependencies: Lombiq.Antispam, Orchard.Users
