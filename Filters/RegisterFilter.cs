@@ -4,11 +4,17 @@ using Orchard.Environment.Extensions;
 using Orchard.Localization;
 using Orchard.Mvc.Filters;
 using Orchard.Security;
-using Orchard.Users.Events;
 using System.Web.Mvc;
+using Orchard.Events;
 
 namespace Lombiq.Antispam.Filters
 {
+    public interface IUserEventHandler : IEventHandler
+    {
+        void Creating(Orchard.Users.Events.UserContext context);
+    }
+
+
     [OrchardFeature("Lombiq.Antispam.Registration")]
     public class RegisterFilter : FilterProvider, IActionFilter, IUserEventHandler
     {
@@ -50,29 +56,13 @@ namespace Lombiq.Antispam.Filters
             filterContext.Controller.ViewData[ContentTypes.RegistrationSpamProtector] = _contentManager.BuildEditor(_contentManager.New(ContentTypes.RegistrationSpamProtector));
         }
 
-        public void Creating(UserContext context)
+        public void Creating(Orchard.Users.Events.UserContext context)
         {
             if (!_modelIsValid)
             {
                 context.Cancel = true;
             }
         }
-
-        public void Created(UserContext context) { }
-
-        public void LoggedIn(IUser user) { }
-
-        public void LoggedOut(IUser user) { }
-
-        public void AccessDenied(IUser user) { }
-
-        public void ChangedPassword(IUser user) { }
-
-        public void SentChallengeEmail(IUser user) { }
-
-        public void ConfirmedEmail(IUser user) { }
-
-        public void Approved(IUser user) { }
 
 
         private class UpdaterController : Controller, IUpdateModel
