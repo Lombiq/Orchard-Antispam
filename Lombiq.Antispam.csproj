@@ -101,6 +101,7 @@
   <ItemGroup>
     <None Include="Licence.md" />
     <Content Include="Views\Register.cshtml" />
+    <Content Include="Readme.md" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

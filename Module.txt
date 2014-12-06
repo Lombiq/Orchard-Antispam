@@ -11,7 +11,7 @@ Features:
         Description: Provides antispam services.
         Category: Security
     Lombiq.Antispam.Registration:
-        Name: Lombiq Antispam Registration
+        Name: Lombiq Antispam - Registration
         Description: Provides antispam services for user registration.
         Category: Security
         Dependencies: Lombiq.Antispam, Orchard.Users
