@@ -1,12 +1,10 @@
-﻿using Orchard;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Lombiq.Antispam.Models;
+using Orchard;
 
 namespace Lombiq.Antispam.Services
 {
     public interface IReCaptchaService : IDependency
     {
-        bool VerifyToken(string token, string action);
+        ReCaptchaTokenVerificationResult VerifyResponseToken(string token, string action);
     }
 }

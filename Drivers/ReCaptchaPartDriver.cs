@@ -5,13 +5,11 @@ using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
-using Orchard.Logging;
 using Orchard.Mvc;
 using Orchard.Security;
 using Orchard.Settings;
 using Orchard.UI.Admin;
 using Orchard.UI.Notify;
-using Orchard.Utility.Extensions;
 using System;
 
 namespace Lombiq.Antispam.Drivers
@@ -30,7 +28,6 @@ namespace Lombiq.Antispam.Drivers
 
 
         public Localizer T { get; set; }
-        public ILogger Logger { get; set; }
 
 
         public ReCaptchaPartDriver(
@@ -51,7 +48,6 @@ namespace Lombiq.Antispam.Drivers
                 _siteService.GetSiteSettings().As<ReCaptchaSettingsPart>());
 
             T = NullLocalizer.Instance;
-            Logger = NullLogger.Instance;
         }
 
 
@@ -81,20 +77,24 @@ namespace Lombiq.Antispam.Drivers
 
             if (string.IsNullOrEmpty(reCaptchaToken))
             {
-                Logger.Error("reCAPTCHA v3 token is empty.");
-
-                updater.AddModelError("", T("An error occurred while validating reCaptcha."));
+                updater.AddModelError("", T("reCAPTCHA v3 response token is unaccessible."));
 
                 return Editor(part, shapeHelper);
             }
-            
-            if (!_reCaptchaService.VerifyToken(reCaptchaToken, part.ContentItem.ContentType))
+
+            var verificationResult = _reCaptchaService.VerifyResponseToken(reCaptchaToken, part.ContentItem.ContentType);
+
+            if (verificationResult.IsFailed)
             {
-                var suspiciousResultText = T("reCAPTCHA verification indicated suspicious activity.");
-
-                _notifier.Error(suspiciousResultText);
-
-                updater.AddModelError("", suspiciousResultText);
+                DisplayErrorMessageAndAddModelError(
+                    updater,
+                    T("reCAPTCHA v3 verification has unexpectedly failed."));
+            }
+            else if (!verificationResult.IsVerified)
+            {
+                DisplayErrorMessageAndAddModelError(
+                    updater, 
+                    T("reCAPTCHA v3 verification has indicated suspicious activity."));
             }
 
             return Editor(part, shapeHelper);
@@ -108,6 +108,13 @@ namespace Lombiq.Antispam.Drivers
             _currentUserLazy.Value == null || !_reCaptchaSettingsPartLazy.Value.TrustAuthenticatedUsers;
 
         private string GetFieldName(ReCaptchaPart part) =>
-            $"ReCaptchaToken-{part.ContentItem.ContentType}".HtmlClassify();
+            $"{part.ContentItem.ContentType}.ReCaptchaResponseToken";
+
+        private void DisplayErrorMessageAndAddModelError(IUpdateModel updater, LocalizedString text)
+        {
+            _notifier.Error(text);
+
+            updater.AddModelError("", text);
+        }
     }
 }

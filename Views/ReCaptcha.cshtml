@@ -3,7 +3,7 @@
 @{
     var siteKey = Model.SiteKey as string;
     var action = Model.Action as string;
-    var fieldName = (Model.FieldName as string) ?? "re-captcha-token";
+    var fieldName = (Model.FieldName as string) ?? "ReCaptchaResponseToken";
     var fieldId = fieldName.HtmlClassify();
 }
 
