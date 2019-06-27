@@ -1,0 +1,19 @@
+﻿@using Orchard.Utility.Extensions
+
+@{
+    var siteKey = Model.SiteKey as string;
+    var action = Model.Action as string;
+    var fieldName = (Model.FieldName as string) ?? "re-captcha-token";
+    var fieldId = fieldName.HtmlClassify();
+}
+
+<input type="hidden" id="@fieldId" name="@fieldName" />
+
+<script src="https://www.google.com/recaptcha/api.js?render=@siteKey"></script>
+<script>
+    grecaptcha.ready(function() {
+        grecaptcha.execute('@siteKey', { action: '@action' }).then(function (token) {
+            document.getElementById('@fieldId').value = token;
+        });
+    });
+</script>

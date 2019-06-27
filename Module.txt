@@ -15,3 +15,8 @@ Features:
         Description: Provides antispam services for user registration.
         Category: Security
         Dependencies: Lombiq.Antispam, Orchard.Users
+    Lombiq.Antispam.ReCaptcha:
+        Name: Lombiq Antispam - reCAPTCHA v3
+        Description: Adds Google reCAPTCHA v3 functionality.
+        Category: Security
+        Dependencies: Lombiq.Antispam, Orchard.AntiSpam
