@@ -129,6 +129,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\ContentTypes.cs" />
+    <Compile Include="Constants\FeatureNames.cs" />
     <Compile Include="Drivers\ReCaptchaPartDriver.cs" />
     <Compile Include="Filters\RegisterFilter.cs" />
     <Compile Include="Migrations.cs" />
@@ -198,5 +199,4 @@
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
 </Project>

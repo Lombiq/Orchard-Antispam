@@ -1,4 +1,5 @@
-﻿using Lombiq.Antispam.Models;
+﻿using Lombiq.Antispam.Constants;
+using Lombiq.Antispam.Models;
 using Orchard.AntiSpam.Models;
 using Orchard.ContentManagement;
 using Orchard.Environment.Extensions;
@@ -6,14 +7,12 @@ using Orchard.Exceptions;
 using Orchard.Logging;
 using Orchard.Mvc;
 using Orchard.Settings;
-using RestEase;
 using System;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Lombiq.Antispam.Services
 {
-    [OrchardFeature("Lombiq.Antispam.ReCaptcha")]
+    [OrchardFeature(FeatureNames.Lombiq_Antispam_ReCaptcha)]
     public class ReCaptchaService : IReCaptchaService
     {
         private const string ReCaptchaResponseTokenVerificationUrl = "https://www.google.com/recaptcha/api/siteverify";

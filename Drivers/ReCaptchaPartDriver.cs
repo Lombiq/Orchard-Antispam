@@ -1,4 +1,5 @@
-﻿using Lombiq.Antispam.Services;
+﻿using Lombiq.Antispam.Constants;
+using Lombiq.Antispam.Services;
 using Orchard;
 using Orchard.AntiSpam.Models;
 using Orchard.ContentManagement;
@@ -15,7 +16,7 @@ using System;
 namespace Lombiq.Antispam.Drivers
 {
     [OrchardSuppressDependency("Orchard.AntiSpam.Drivers.ReCaptchaPartDriver")]
-    [OrchardFeature("Lombiq.Antispam.ReCaptcha")]
+    [OrchardFeature(FeatureNames.Lombiq_Antispam_ReCaptcha)]
     public class ReCaptchaPartDriver : ContentPartDriver<ReCaptchaPart>
     {
         private readonly INotifier _notifier;

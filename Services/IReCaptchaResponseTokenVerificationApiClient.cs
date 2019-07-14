@@ -18,11 +18,11 @@ namespace Lombiq.Antispam.Services
         public static Task<ReCaptchaTokenVerificationResponse> VerifyTokenAsync(
             this IReCaptchaResponseTokenVerificationApiClient client,
             ReCaptchaTokenVerificationRequest request) =>
-            client.VerifyTokenAsync(new Dictionary<string, object>
-            {
-                ["secret"] = request.SecretKey,
-                ["response"] = request.ResponseToken,
-                ["remoteip"] = request.RemoteIp
-            });
+                client.VerifyTokenAsync(new Dictionary<string, object>
+                {
+                    ["secret"] = request.SecretKey,
+                    ["response"] = request.ResponseToken,
+                    ["remoteip"] = request.RemoteIp
+                });
     }
 }

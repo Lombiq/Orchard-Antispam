@@ -5,7 +5,7 @@ using Orchard.Environment.Extensions;
 
 namespace Lombiq.Antispam
 {
-    [OrchardFeature("Lombiq.Antispam.Registration")]
+    [OrchardFeature(FeatureNames.Lombiq_Antispam_Registration)]
     public class Migrations : DataMigrationImpl
     {
         public int Create()
