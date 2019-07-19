@@ -7,6 +7,7 @@ using Orchard.Exceptions;
 using Orchard.Logging;
 using Orchard.Mvc;
 using Orchard.Settings;
+using RestEase;
 using System;
 using System.Linq;
 
