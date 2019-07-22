@@ -22,6 +22,13 @@ After installation you'll see a new content part, "JavaScript Antispam Part". Ju
 
 This works equally well with e.g. comments and forms created with Custom Forms.
 
+
+## reCAPTCHA v3
+
+After enabling the feature the built-in Orchard.AntiSpam reCAPTCHA v2 feature will be overriden with reCAPTCHA v3.
+
+The API keys can be set on the Settings / Spam page. Keys can be acquired from [https://www.google.com/recaptcha](https://www.google.com/recaptcha) and make sure you register your site using reCAPTCHA v3.
+
 The module's source is available in two public source repositories, automatically mirrored in both directions with [Git-hg Mirror](https://githgmirror.com):
 
 - [https://bitbucket.org/Lombiq/orchard-antispam](https://bitbucket.org/Lombiq/orchard-antispam) (Mercurial repository)

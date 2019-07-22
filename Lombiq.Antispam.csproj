@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -14,7 +14,8 @@
     <AssemblyName>Lombiq.Antispam</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews Condition=" '$(BuildViews)' == 'true' ">true</MvcBuildViews>
-    <FileUpgradeFlags></FileUpgradeFlags>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
     <OldToolsVersion>4.0</OldToolsVersion>
     <UpgradeBackupLocation />
     <TargetFrameworkProfile />
@@ -24,6 +25,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -48,12 +50,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RestEase, Version=1.4.9.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\RestEase.1.4.9\lib\net45\RestEase.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.ComponentModel.DataAnnotations">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -109,6 +118,10 @@
       <Name>Orchard.Core</Name>
       <Private>false</Private>
     </ProjectReference>
+    <ProjectReference Include="..\Orchard.AntiSpam\Orchard.AntiSpam.csproj">
+      <Project>{91bc2e7f-da04-421c-98ef-76d37cec130c}</Project>
+      <Name>Orchard.AntiSpam</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Orchard.Users\Orchard.Users.csproj">
       <Project>{79aed36e-abd0-4747-93d3-8722b042454b}</Project>
       <Name>Orchard.Users</Name>
@@ -116,8 +129,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants\ContentTypes.cs" />
+    <Compile Include="Constants\FeatureNames.cs" />
+    <Compile Include="Drivers\ReCaptchaPartDriver.cs" />
     <Compile Include="Filters\RegisterFilter.cs" />
     <Compile Include="Migrations.cs" />
+    <Compile Include="Models\ReCaptchaTokenVerificationResult.cs" />
+    <Compile Include="Models\ReCaptchaTokenVerificationResponse.cs" />
+    <Compile Include="Models\ReCaptchaTokenVerificationRequest.cs" />
+    <Compile Include="Services\IReCaptchaService.cs" />
+    <Compile Include="Services\IReCaptchaResponseTokenVerificationApiClient.cs" />
+    <Compile Include="Services\ReCaptchaService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Placement.info">
@@ -128,6 +149,8 @@
     <None Include="Licence.md" />
     <Content Include="Views\Register.cshtml" />
     <Content Include="Readme.md" />
+    <Content Include="Views\EditorTemplates\Parts.ReCaptcha.Fields.cshtml" />
+    <Content Include="Views\ReCaptcha.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -163,7 +186,8 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>45979</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl></IISUrl>
+          <IISUrl>
+          </IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>True</UseCustomServer>
           <CustomServerUrl>http://orchard.codeplex.com</CustomServerUrl>

@@ -15,7 +15,7 @@ namespace Lombiq.Antispam.Filters
     }
 
 
-    [OrchardFeature("Lombiq.Antispam.Registration")]
+    [OrchardFeature(FeatureNames.Lombiq_Antispam_Registration)]
     public class RegisterFilter : FilterProvider, IActionFilter, IUserEventHandler
     {
         private readonly IContentManager _contentManager;

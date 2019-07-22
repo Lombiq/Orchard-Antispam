@@ -2,7 +2,7 @@
 
 namespace Lombiq.Antispam.Constants
 {
-    [OrchardFeature("Lombiq.Antispam.Registration")]
+    [OrchardFeature(FeatureNames.Lombiq_Antispam_Registration)]
     public class ContentTypes
     {
         public const string RegistrationSpamProtector = "RegistrationSpamProtector";
