@@ -1,8 +1,8 @@
-# Lombiq Antispam Readme
+# Lombiq Antispam
 
 
 
-## Project Description
+## About
 
 An Orchard module for better spam protection.
 
@@ -29,12 +29,9 @@ After enabling the feature the built-in Orchard.AntiSpam reCAPTCHA v2 feature wi
 
 The API keys can be set on the Settings / Spam page. Keys can be acquired from [https://www.google.com/recaptcha](https://www.google.com/recaptcha) and make sure you register your site using reCAPTCHA v3.
 
-The module's source is available in two public source repositories, automatically mirrored in both directions with [Git-hg Mirror](https://githgmirror.com):
 
-- [https://bitbucket.org/Lombiq/orchard-antispam](https://bitbucket.org/Lombiq/orchard-antispam) (Mercurial repository)
-- [https://github.com/Lombiq/Orchard-Antispam](https://github.com/Lombiq/Orchard-Antispam) (Git repository)
+## Contributing and support
 
-Bug reports, feature requests and comments are warmly welcome, **please do so via GitHub**.
-Feel free to send pull requests too, no matter which source repository you choose for this purpose.
+Bug reports, feature requests, comments, questions, code contributions, and love letters are warmly welcome, please do so via GitHub issues and pull requests. Please adhere to our [open-source guidelines](https://lombiq.com/open-source-guidelines) while doing so.
 
-This project is developed by [Lombiq Technologies Ltd](http://lombiq.com/). Commercial-grade support is available through Lombiq.
+This project is developed by [Lombiq Technologies](https://lombiq.com/). Commercial-grade support is available through Lombiq.
